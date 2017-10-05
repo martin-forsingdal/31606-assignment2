@@ -4,8 +4,8 @@ function [] = poles_and_zeros(poles,zeros)
 %   zeros=vector containing zeros of the system
 
 figure('Position',[100 300 800 600],'Color','white');
-zplane(zeros,poles);
+zplane(zeros',poles');
 figure('Position',[1000 300 800 600],'Color','white');
-freqz(poly(zeros),poly(poles));
+freqz(poly(zeros'),poly(poles'));
 end
 
