@@ -1,5 +1,5 @@
 function [] = poles_and_zeros(poles,zeros)
-%POLES_AND_ZEROS plot poles/zeros and the spectrum
+%POLES_AND_ZEROS creates poles/zeros diagram and the spectrum of the system
 %   poles=vector containing poles of the system
 %   zeros=vector containing zeros of the system
 
