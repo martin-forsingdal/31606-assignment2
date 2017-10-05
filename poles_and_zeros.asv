@@ -1,0 +1,12 @@
+function [] = poles_and_zeros(poles,zeros)
+%POLES_AND_ZEROS plot poles/zeros and the spectrum
+%   poles=vector containing poles of the system
+%   zeros=vector containing zeros of the system
+
+figure('Position',[100 300 1000 600],'Color','white');
+subplot(1,2,1)
+zplane(zeros,poles)
+subplot(1,2,1)
+freqz(poly(zeros),poly(poles))
+end
+
