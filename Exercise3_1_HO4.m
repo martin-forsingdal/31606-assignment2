@@ -20,7 +20,7 @@ ylabel('Signal [a.u.]','FontSize',15);
 %title('Plot of sound signal','FontSize',20);
 grid on;
 set(gcf,'Position',[100 100 800 500]);
-
+set(gca,'Fontsize',12)
 %% Compute spectrum
 [Y, freq] = spectrum_maker(y,fs);
 Y_db = 20*log10(abs(Y))';
@@ -39,6 +39,7 @@ ylabel('Amplitude [a.u.]','FontSize',15);
 %title('Amplitude spectrum','FontSize',20);
 xlim([0 fs/2]);
 set(gcf,'Position',[100 100 1000 600]);
+set(gca,'Fontsize',12)
 subplot(2,1,2);
 plot(freqpos,angle(Ypos)*180/pi,'b');
 xlabel('Frequency [Hz]','FontSize',15);
@@ -46,7 +47,7 @@ ylabel('Phase [Degrees]','FontSize',15);
 %title('Phase spectrum','FontSize',20);
 xlim([0 fs/2]);
 grid on;
-
+set(gca,'Fontsize',12)
 %% Create frequency vector and spectrum
 durationNew = 2;
 phase=-pi/5;
@@ -57,8 +58,8 @@ Ynew = ones(1,length(freq))*1e-4;
 Ynew2 = ones(1,length(freq))*1e-4;
 rk=0;
 for i = 1:20
-    Ynew(int16(2*i*f_0)+1) = 1;
-    Ynew2(int16(2*i*f_0)+1) = exp(-i/8)*exp(-j*phase*i);
+    Ynew(int16(F_0*i*f_0)+1) = 1;
+    Ynew2(int16(F_0*i*f_0)+1) = exp(-i/8)*exp(-j*phase*i);
 end
 Ynew(length(Ynew)/2+2:end) = fliplr(Ynew(2:length(Ynew)/2));
 Ynew2(length(Ynew2)/2+2:end) = conj(fliplr(Ynew2(2:length(Ynew2)/2)));
@@ -68,15 +69,16 @@ Ynew_db2 = 20*log10(abs(Ynew2));
 %% Plot new spectrum with phase 0
 fig3 = figure(3);
 subplot(2,1,1);
-plot(freq-fs/2,fftshift(Ynew_db),'b');
+plot(freq-fs/2,fftshift(Ynew_db),'g');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
 %title('Amplitude spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
 grid on;
 ylim([min(Ynew_db)*1.1 10]);
+set(gca,'Fontsize',12)
 subplot(2,1,2);
-plot(freq-fs/2,fftshift(angle(Ynew))*180/pi,'b');
+plot(freq-fs/2,fftshift(angle(Ynew))*180/pi,'g');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Phase [Deg]','FontSize',15);
 %title('Phase spectrum','FontSize',20);
@@ -84,19 +86,20 @@ xlim([-fs/8 fs/8]);
 ylim([-180 180]);
 grid on;
 set(gcf,'Position',[100 100 1000 600]);
-
+set(gca,'Fontsize',12)
 %% Plot new spectrum with varied phase
 fig4 = figure(4);
 subplot(2,1,1);
-plot(freq-fs/2,fftshift(Ynew_db2),'b');
+plot(freq-fs/2,fftshift(Ynew_db2),'r');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
 %title('Amplitude spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
 grid on;
 ylim([min(Ynew_db2)*1.1 10]);
+set(gca,'Fontsize',12)
 subplot(2,1,2);
-plot(freq-fs/2,fftshift(angle(Ynew2))*180/pi,'b');
+plot(freq-fs/2,fftshift(angle(Ynew2))*180/pi,'r');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Phase [Deg]','FontSize',15);
 %title('Phase spectrum','FontSize',20);
@@ -104,7 +107,7 @@ xlim([-fs/8 fs/8]);
 ylim([-180 180]);
 grid on;
 set(gcf,'Position',[100 100 1000 600]);
-
+set(gca,'Fontsize',12)
 %% Compute inverse Fourier transform and obtain time signal
 ynew = ifft(Ynew);
 ynew2 = ifft(Ynew2);
@@ -113,7 +116,7 @@ ynew = ynew/max(ynew)*.9;
 ynew2 = ynew2/max(ynew2)*.9;
 t = 0:1/fs:durationNew-1/fs;
 fig5 = figure(5);
-plot(t,ynew,'b');
+plot(t,ynew,'g');
 xlabel('Time [s]','FontSize',15);
 ylabel('Signal value [a.u.]','FontSize',15);
 %title('Plot of created time signal','FontSize',20);
@@ -121,9 +124,9 @@ grid on;
 set(gcf,'Position',[100 100 1000 600]);
 xlim([0 2]);
 ylim([-0.4 1.1]);
-
+set(gca,'Fontsize',12)
 fig6 = figure(6);
-plot(t,ynew2,'b');
+plot(t,ynew2,'r');
 xlabel('Time [s]','FontSize',15);
 ylabel('Signal value [a.u.]','FontSize',15);
 %title('Plot of created time signal','FontSize',20);
@@ -131,6 +134,8 @@ grid on;
 set(gcf,'Position',[100 100 1000 600]);
 xlim([0 2]);
 ylim([-0.4 1.1]);
+set(gca,'Fontsize',12)
+
 %% Export figures and close them
 hgexport(fig1,'pianoTone_time_orig');
 saveas(fig1,'pianoTone_time_orig.png');
