@@ -8,7 +8,7 @@ set(0,'DefaultFigureVisible','off');
 filename = 'piano.wav';
 [y fs] = audioread(filename);
 sound(y,fs);
-
+pause(length(y)/fs);
 %% Plot sound signal
 % Create time vector
 duration = length(y)/fs;
