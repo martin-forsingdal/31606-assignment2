@@ -17,9 +17,9 @@ fig1 = figure(1);
 plot(t,y(1:length(t)),'b');
 xlabel('Time [t]','FontSize',15);
 ylabel('Signal [a.u.]','FontSize',15);
-title('Plot of sound signal','FontSize',20);
+%title('Plot of sound signal','FontSize',20);
 grid on;
-set(gcf,'Position',[0 0 1920 1080]);
+set(gcf,'Position',[100 100 800 500]);
 
 %% Compute spectrum
 [Y, freq] = spectrum_maker(y,fs);
@@ -36,13 +36,15 @@ plot(freqpos,Y_dbpos,'b');
 grid on;
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
-title('Amplitude spectrum','FontSize',20);
-set(gcf,'Position',[0 0 1920 1080]);
+%title('Amplitude spectrum','FontSize',20);
+xlim([0 fs/2]);
+set(gcf,'Position',[100 100 1000 600]);
 subplot(2,1,2);
 plot(freqpos,angle(Ypos)*180/pi,'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Phase [Degrees]','FontSize',15);
-title('Phase spectrum','FontSize',20);
+%title('Phase spectrum','FontSize',20);
+xlim([0 fs/2]);
 grid on;
 
 %% Create frequency vector and spectrum
@@ -63,13 +65,13 @@ Ynew2(length(Ynew2)/2+2:end) = conj(fliplr(Ynew2(2:length(Ynew2)/2)));
 Ynew_db = 20*log10(Ynew);
 Ynew_db2 = 20*log10(abs(Ynew2));
 
-%% Plot new spectrum
+%% Plot new spectrum with phase 0
 fig3 = figure(3);
 subplot(2,1,1);
 plot(freq-fs/2,fftshift(Ynew_db),'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
-title('Amplitude spectrum','FontSize',20);
+%title('Amplitude spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
 grid on;
 ylim([min(Ynew_db)*1.1 10]);
@@ -77,18 +79,19 @@ subplot(2,1,2);
 plot(freq-fs/2,fftshift(angle(Ynew))*180/pi,'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Phase [Deg]','FontSize',15);
-title('Phase spectrum','FontSize',20);
+%title('Phase spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
+ylim([-180 180]);
 grid on;
-set(gcf,'Position',[0 0 1920 1080]);
+set(gcf,'Position',[100 100 1000 600]);
 
-%% Plot new spectrum
+%% Plot new spectrum with varied phase
 fig4 = figure(4);
 subplot(2,1,1);
 plot(freq-fs/2,fftshift(Ynew_db2),'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
-title('Amplitude spectrum','FontSize',20);
+%title('Amplitude spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
 grid on;
 ylim([min(Ynew_db2)*1.1 10]);
@@ -96,10 +99,11 @@ subplot(2,1,2);
 plot(freq-fs/2,fftshift(angle(Ynew2))*180/pi,'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Phase [Deg]','FontSize',15);
-title('Phase spectrum','FontSize',20);
+%title('Phase spectrum','FontSize',20);
 xlim([-fs/8 fs/8]);
+ylim([-180 180]);
 grid on;
-set(gcf,'Position',[0 0 1920 1080]);
+set(gcf,'Position',[100 100 1000 600]);
 
 %% Compute inverse Fourier transform and obtain time signal
 ynew = ifft(Ynew);
@@ -112,29 +116,34 @@ fig5 = figure(5);
 plot(t,ynew,'b');
 xlabel('Time [s]','FontSize',15);
 ylabel('Signal value [a.u.]','FontSize',15);
-title('Plot of created time signal','FontSize',20);
+%title('Plot of created time signal','FontSize',20);
 grid on;
-set(gcf,'Position',[0 0 1920 1080]);
+set(gcf,'Position',[100 100 1000 600]);
 xlim([0 2]);
+ylim([-0.4 1.1]);
 
 fig6 = figure(6);
 plot(t,ynew2,'b');
 xlabel('Time [s]','FontSize',15);
 ylabel('Signal value [a.u.]','FontSize',15);
-title('Plot of created time signal','FontSize',20);
+%title('Plot of created time signal','FontSize',20);
 grid on;
-set(gcf,'Position',[0 0 1920 1080]);
+set(gcf,'Position',[100 100 1000 600]);
 xlim([0 2]);
-
+ylim([-0.4 1.1]);
 %% Export figures and close them
-hgexport(fig1,'time_plot_piano');
-saveas(fig1,'time_plot_piano.png');
-hgexport(fig2,'spectrum_piano');
-saveas(fig2,'spectrum_piano.png');
-hgexport(fig3,'spectrum_selfmade');
-saveas(fig3,'spectrum_selfmade.png');
-hgexport(fig4,'time_selfmade');
-saveas(fig4,'time_selfmade.png');
+hgexport(fig1,'pianoTone_time_orig');
+saveas(fig1,'pianoTone_time_orig.png');
+hgexport(fig2,'pianoTone_spec_orig');
+saveas(fig2,'pianoTone_spec_orig.png');
+hgexport(fig3,'pianoTone_spec_1');
+saveas(fig3,'pianoTone_spec_1.png');
+hgexport(fig4,'pianoTone_spec_2');
+saveas(fig4,'pianoTone_spec_2.png');
+hgexport(fig5,'pianoTone_time_1');
+saveas(fig5,'pianoTone_time_1.png');
+hgexport(fig6,'pianoTone_time_2');
+saveas(fig6,'pianoTone_time_2.png');
 close all;
 
 %% Play sounds
