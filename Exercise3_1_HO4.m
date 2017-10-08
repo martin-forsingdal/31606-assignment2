@@ -48,11 +48,11 @@ grid on;
 %% Create frequency vector
 durationNew = 2;
 F_0 = 1/durationNew;
-f_0 = 130;
+f_0 = 130.5;
 freq = 0:F_0:fs-F_0;
 Ynew = ones(1,length(freq))*1e-4;
-for i = 1:15
-    Ynew(i*f_0+1) = 0.5*exp(-0.5*i)*100;
+for i = 2:21
+    Ynew(int16(i*f_0)+1) = 1;
 end
 Ynew(length(Ynew)/2+2:end) = fliplr(Ynew(2:length(Ynew)/2));
 Ynew_db = 20*log10(Ynew);
@@ -64,9 +64,9 @@ plot(freq-fs/2,fftshift(Ynew_db),'b');
 xlabel('Frequency [Hz]','FontSize',15);
 ylabel('Amplitude [a.u.]','FontSize',15);
 title('Amplitude spectrum','FontSize',20);
-xlim([-fs/2 fs/2]);
+xlim([-fs/8 fs/8]);
 grid on;
-ylim([min(Ynew_db) 0]);
+ylim([min(Ynew_db)*1.1 10]);
 subplot(2,1,2);
 plot(freq,angle(Ynew)*180/pi,'b');
 xlabel('Frequency [Hz]','FontSize',15);
