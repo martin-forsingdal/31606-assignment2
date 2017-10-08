@@ -1,5 +1,4 @@
-function [time_vector, signal] = generate_sinusoid(amp, f, phase, fs, Ts)
-function [time_vector signal] = generate_sinusoid(a, f, phi, fs, T_s)
+function [time_vector, signal] = generate_sinusoid(a, f, phi, fs, T_s)
 % Function call:
 %
 % >> [time_vector signal] = generate_sinusoid(a, f, phi, fs, T_s)
