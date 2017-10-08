@@ -1,0 +1,10 @@
+diff a/Exercise3_1_HO4.m b/Exercise3_1_HO4.m	(rejected hunks)
+@@ -71,7 +71,7 @@
+ subplot(2,1,1);
+ plot(freq-fs/2,fftshift(Ynew_db),'g');
+ xlabel('Frequency [Hz]','FontSize',15);
+-ylabel('Amplitude [a.u.]','FontSize',15);
++ylabel('Amplitude [dB]','FontSize',15);
+ %title('Amplitude spectrum','FontSize',20);
+ xlim([-fs/8 fs/8]);
+ grid on;
