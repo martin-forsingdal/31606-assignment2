@@ -56,10 +56,9 @@ f_0 = 130.5;
 freq = 0:F_0:fs-F_0;
 Ynew = ones(1,length(freq))*1e-4;
 Ynew2 = ones(1,length(freq))*1e-4;
-rk=0;
 for i = 1:20
-    Ynew(int16(F_0*i*f_0)+1) = 1;
-    Ynew2(int16(F_0*i*f_0)+1) = exp(-i/8)*exp(-j*phase*i);
+    Ynew(int16(durationNew*i*f_0)+1) = 1;
+    Ynew2(int16(durationNew*i*f_0)+1) = exp(-i/8)*exp(j*angle(Y(int16(duration*i*f_0+1))));
 end
 Ynew(length(Ynew)/2+2:end) = fliplr(Ynew(2:length(Ynew)/2));
 Ynew2(length(Ynew2)/2+2:end) = conj(fliplr(Ynew2(2:length(Ynew2)/2)));
