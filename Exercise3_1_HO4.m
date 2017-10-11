@@ -68,6 +68,7 @@ for i = 1:N
     % Define the i'th fundamental frequency component fo F_synth2
     F_synth2(dur_synth*i*f_0+1) = exp(-i/8)*exp(j*phase_Fsynth2);
 end
+% Ensure complex conjugate symmetry around Omega=0
 F_synth1(length(F_synth1)/2+2:end) = fliplr(F_synth1(2:length(F_synth1)/2));
 F_synth2(length(F_synth2)/2+2:end) = conj(fliplr(F_synth2(2:length(F_synth2)/2)));
 F_synth1_db = 20*log10(F_synth1);
