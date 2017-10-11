@@ -76,6 +76,7 @@ freqz(B, A);
 %clear all;
 clc;
 close all;
+%%
 % For lowpass set zero = -1 and pole = 0;
 % For highpass set zero = 1 and pole = 0;
 zero = -1;
