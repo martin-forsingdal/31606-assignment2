@@ -91,9 +91,12 @@ freqz(B, A);
 % Choose to put poles and zeros on top of each other
 r = 1.1;
 q = 1/r;
-phi=[0, 0.4, 0.8, -0.4, -0.8]*pi;
-zero5=r*exp(j*phi);
-pole5=q*exp(j*phi);
+phi=[0.4, 0.8, -1.2, -1.6, -2]*pi;
+zero51=r*exp(j*phi)
+zero5 = r*[exp(-j*0.4*pi) exp(-j*0.8*pi) exp(-j*1.2*pi) ...
+    exp(-j*1.6*pi) exp(-j*2*pi)];
+pole5 = q*[exp(-j*0.4*pi) exp(-j*0.8*pi) exp(-j*1.2*pi) ...
+    exp(-j*1.6*pi) exp(-j*2*pi)];
 A5 = poly(pole5);
 B5 = poly(zero5);
 % Plot the zplane and frequency
