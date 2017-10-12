@@ -76,7 +76,7 @@ freqz(B, A);
 %clear all;
 clc;
 close all;
-%% sample frequency used for filters
+%% sample frequency used for filtering of sinusoid
 fs = 1000;
 %%
 % For lowpass set zero = -1 and pole = 0;
@@ -118,6 +118,7 @@ ylim([-20 5]);
 
 %% Create sinusoid:
 f = 20;
+%create a sinusoid with frequency of 20 Hz
 [t, sinusoid] = generate_sinusoid(1,f,0,fs,1);
 % Lowpass filter sinusoid
 sinusoid_low = real(filter(B_low,A_low,sinusoid));
