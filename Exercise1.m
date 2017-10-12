@@ -102,7 +102,8 @@ freqz(B_high, A_high);
 % the unit circle
 r = 1.1;
 q = 1/r;
-phi=[0, 0.4, 0.8, -0.4, -0.8]*pi;
+order=5;
+phi=(0:1/order:1-1/order)*2*pi;
 zero5=r*exp(1i*phi);
 pole5=q*exp(1i*phi);
 A_allpass = poly(pole5);
