@@ -78,42 +78,132 @@ clc;
 close all;
 %%
 % For lowpass set zero = -1 and pole = 0;
-% For highpass set zero = 1 and pole = 0;
+fs = 1000;
 zero = -1;
 pole = 0;
-A = poly(pole);
-B = poly(zero);
+A_low = poly(pole);
+B_low = poly(zero);
 % Plot the zplane and frequency
 figure(1);
 zplane(zero,pole);
 figure(2);
-freqz(B, A);
-% Choose to put poles and zeros on top of each other
+freqz(B_low, A_low);
+% For highpass set zero = 1 and pole = 0;
+zero = 1;
+pole = 0;
+A_high = poly(pole);
+B_high = poly(zero);
+% Plot the zplane and frequency
+figure(3);
+zplane(zero,pole);
+figure(4);
+freqz(B_high, A_high);
+% Choose to put poles and zeros on top of each other or same distance from
+% the unit circle
 r = 1.1;
 q = 1/r;
 phi=[0, 0.4, 0.8, -0.4, -0.8]*pi;
-zero5=r*exp(j*phi);
-pole5=q*exp(j*phi);
-A5 = poly(pole5);
-B5 = poly(zero5);
+zero5=r*exp(1i*phi);
+pole5=q*exp(1i*phi);
+A_allpass = poly(pole5);
+B_allpass = poly(zero5);
 % Plot the zplane and frequency
-figure(3);
+figure(5);
 zplane(zero5',pole5');
-figure(4);
-freqz(B5, A5,512,fs);
+figure(6);
+freqz(B_allpass, A_allpass,512,fs);
 ylim([-20 5]);
 
-fs = 1000;
 %% Create sinusoid:
 f = 20;
-[t signal] = generate_sinusoid(1,f,0,fs,1);
-% Filter signal
-signal_filtered = real(filter(B5,A5,signal));
-% Plot the filtered signal
+[t, sinusoid] = generate_sinusoid(1,f,0,fs,1);
+% Lowpass filter sinusoid
+sinusoid_low = real(filter(B_low,A_low,sinusoid));
+% Plot the alpass filtered sinusoid
 figure(1);
-plot(t,signal,'r');
+plot(t,sinusoid,'r');
 hold on;
-plot(t,signal_filtered,'b');
+plot(t,sinusoid_low,'b');
 legend('Signal','Filtered signal');
 hold off;
 xlim([0 1/f*4]);
+
+% Highpass filter sinusoid
+sinusoid_high = real(filter(B_high,A_high,sinusoid));
+% Plot the alpass filtered sinusoid
+figure(2);
+plot(t,sinusoid,'r');
+hold on;
+plot(t,sinusoid_high,'b');
+legend('Signal','Filtered signal');
+hold off;
+xlim([0 1/f*4]);
+
+% Allpass filter sinusoid
+sinusoid_allpass = real(filter(B_allpass,A_allpass,sinusoid));
+% Plot the alpass filtered sinusoid
+figure(3);
+plot(t,sinusoid,'r');
+hold on;
+plot(t,sinusoid_allpass,'b');
+legend('Signal','Filtered signal');
+hold off;
+xlim([0 1/f*4]);
+%% Read sound file
+filename = 'x.wav';
+[soundsignal, fs] = audioread(filename);
+dur = length(soundsignal)/fs;
+t = 0:1/fs:dur-1/fs;
+% Play the sound file
+sound(soundsignal,fs);
+pause(dur);
+
+
+%% Filter soundsignal
+%NOTE: the filter are the same, since they scale with the sampling
+%frequency!
+% Lowpass filter soundsignal
+soundsignal_low = real(filter(B_low,A_low,soundsignal));
+% Plot the alpass filtered soundsignal
+figure(1);
+plot(t,soundsignal_low,'b');
+hold on;
+plot(t,soundsignal,'r');
+legend('Filtered signal','Signal');
+hold off;
+xlim([0 dur]);
+
+% Highpass filter soundsignal
+soundsignal_high = real(filter(B_high,A_high,soundsignal));
+% Plot the alpass filtered soundsignal
+figure(2);
+plot(t,soundsignal,'r');
+hold on;
+plot(t,soundsignal_high,'b');
+legend('Signal','Filtered signal');
+hold off;
+xlim([0 dur]);
+
+% Allpass filter soundsignal
+soundsignal_allpass = real(filter(B_allpass,A_allpass,soundsignal));
+% Plot the alpass filtered soundsignal
+figure(3);
+plot(t,soundsignal,'r');
+hold on;
+plot(t,soundsignal_allpass,'b');
+legend('Signal','Filtered signal');
+hold off;
+xlim([0 dur]);
+
+%% Play the lowpass filtered soundsignal
+sound(soundsignal_low,fs);
+pause(dur);
+
+%% Play the highpass filtered soundsignal
+sound(soundsignal_high,fs);
+pause(dur);
+
+%% Play the allpass filtered soundsignal
+sound(soundsignal_allpass,fs);
+sound(soundsignal,fs);
+pause(dur);
