@@ -76,9 +76,10 @@ freqz(B, A);
 %clear all;
 clc;
 close all;
+%% sample frequency used for filters
+fs = 1000;
 %%
 % For lowpass set zero = -1 and pole = 0;
-fs = 1000;
 zero = -1;
 pole = 0;
 A_low = poly(pole);
@@ -112,7 +113,7 @@ B_allpass = poly(zero5);
 figure(5);
 zplane(zero5',pole5');
 figure(6);
-freqz(B_allpass, A_allpass,512,fs);
+freqz(B_allpass, A_allpass);
 ylim([-20 5]);
 
 %% Create sinusoid:
@@ -189,10 +190,10 @@ xlim([0 dur]);
 soundsignal_allpass = real(filter(B_allpass,A_allpass,soundsignal));
 % Plot the alpass filtered soundsignal
 figure(3);
-plot(t,soundsignal,'r');
-hold on;
 plot(t,soundsignal_allpass,'b');
-legend('Signal','Filtered signal');
+hold on;
+plot(t,soundsignal,'r');
+legend('Filtered signal','Signal');
 hold off;
 xlim([0 dur]);
 
@@ -206,5 +207,4 @@ pause(dur);
 
 %% Play the allpass filtered soundsignal
 sound(soundsignal_allpass,fs);
-sound(soundsignal,fs);
 pause(dur);
