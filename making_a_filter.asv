@@ -4,15 +4,17 @@ clear
 close all
 
 %% design filter
-% specify the attenuations (positive numbers!)
+% specify the attenuations. These are Gp=-2 dB and Gs=-11 dB, but
+% they are defined positive because the buttord function
+% only take positive numbers.
 Gp = 2;    
 Gs = 11;
 
-% specify the frequencies
+% specify the frequencies for which the attenuations must be present
 w_p = 10;    
 w_s = 15;
 
-% specify the highest frequency to process (Nyquist!)
+% specify the highest frequency to process (Nyquist frequency!)
 w_max = 35; 
 
 % normalize the frequencies:
@@ -25,14 +27,14 @@ w_s_norm = w_s/w_max;
 % get the filter coefficients:
 [B, A] = butter(N, Wn);
 
-%%
+%% Plot z-plane and spectrum of the f
 fs=4*pi*35; %omega_n = 35
 figure(1);
 freqz(B, A);
-nuller=roots(B);
+zeros=roots(B);
 poler=roots(A);
 figure(2);
-zplane(nuller,poler);
+zplane(zeros,poler);
 
 %% 1.2
 %% generate signal
