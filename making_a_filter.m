@@ -29,23 +29,24 @@ w_s_norm = w_s/w_max;
 
 %% Plot z-plane and spectrum of the filter
 % Choose sampling frequency as four times the highest frequency w_max
-fs=4*pi*35; %omega_n = 35
+fs=2*35/pi; %omega_n = 35
 figure(1);
 freqz(B, A);
 zeros=roots(B);
-poler=roots(A);
+poles=roots(A);
 figure(2);
-zplane(zeros,poler);
+zplane(zeros,poles);
 
 %% 1.2
 %% generate signal
 f=10;
 [t, s] = generate_sinusoid(1,f,0,fs,1);
-
+% Filter the sinusoid
 s_filt1=filter(B,A,s);
+% Time invert the filtered sinusoid, and filter this time inverted signal
+% though the filter
 s_filt2=filter(B,A,fliplr(s_filt1));
-%% Plot signal
-% Create time vector
+%% Plot the original signal and the processed signal
 fig1 = figure(1);
 plot(t,fliplr(s_filt2),'r','LineWidth',3);
 xlabel('Time [t]','FontSize',15);
