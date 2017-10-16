@@ -28,8 +28,10 @@ w_s_norm = w_s/w_max;
 [B, A] = butter(N, Wn);
 
 %% Plot z-plane and spectrum of the filter
-% Choose sampling frequency as four times the highest frequency w_max
-fs=2*35/pi; %omega_n = 35
+% Choose sampling frequency as 40 times the highest frequency w_max. 
+% The sampling frequency is chosen this high to assure that the phase
+% of a time signal can be easily examined from a plot
+fs=20*35/pi; %omega_n = 35
 figure(1);
 freqz(B, A);
 zeros=roots(B);
