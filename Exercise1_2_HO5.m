@@ -16,7 +16,8 @@ B_low = poly(zero);
 % Plot the zplane and frequency
 figure(1);
 zplane(zero,pole);
-figure(2);
+set(gca, 'Fontsize', 14)
+figure('Name', 'Spectrum of lowpass', 'Position', [600 100 400 330]);
 freqz(B_low, A_low);
 % For highpass set zero = 1 and pole = 0;
 zero = 1;
@@ -26,7 +27,8 @@ B_high = poly(zero);
 % Plot the zplane and frequency
 figure(3);
 zplane(zero,pole);
-figure(4);
+set(gca, 'Fontsize', 14)
+figure('Name', 'Spectrum of highpass', 'Position', [600 100 400 330]);
 freqz(B_high, A_high);
 % Choose to put poles and zeros on top of each other or same distance from
 % the unit circle
@@ -41,10 +43,10 @@ B_allpass = poly(zero5);
 % Plot the zplane and frequency
 figure(5);
 zplane(zero5',pole5');
-figure(6);
+set(gca, 'Fontsize', 14)
+figure('Name', 'Spectrum of allpass', 'Position', [600 100 400 330]);
 freqz(B_allpass, A_allpass);
 ylim([-20 5]);
-
 %% Create sinusoid:
 close all;
 f = 20;
@@ -62,7 +64,6 @@ legend('Signal','Filtered signal');
 hold off;
 xlim([0 1/f*4]);
 grid on;
-%hgexport(gcf,'sin_low');
 
 % Highpass filter sinusoid
 sinusoid_high = real(filter(B_high,A_high,sinusoid));
